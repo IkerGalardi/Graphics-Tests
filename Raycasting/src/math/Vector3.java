@@ -11,6 +11,10 @@ public class Vector3 {
         this.z = z;
     }
 
+    public static boolean equals(Vector3 left, Vector3 right){
+        return left.x == right.x && left.y == right.y && left.z == right.z;
+    }
+
     public float length(){
         return (float) Math.sqrt(x*x + y*y + z*z);
     }
@@ -18,6 +22,10 @@ public class Vector3 {
     public Vector3 normalized(){
         float length = this.length();
         return new Vector3(this.x / length, this.y / length, this.z / length);
+    }
+
+    public static Vector3 zero(){
+        return new Vector3(0,0,0);
     }
 
     public static Vector3 add(Vector3 left, Vector3 right){
@@ -56,5 +64,9 @@ public class Vector3 {
 
     public void setZ(float z) {
         this.z = z;
+    }
+
+    public String toString(){
+        return "(" + x + ", " + y + ", " + z + ")";
     }
 }
