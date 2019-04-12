@@ -1,8 +1,10 @@
 package source;
 
 import math.Vector3;
+import raytracing.IntersectionData;
 import raytracing.Ray;
 import raytracing.shapes.GeometricShape;
+import raytracing.shapes.InfinitePlane;
 import raytracing.shapes.Sphere;
 
 import javax.imageio.ImageIO;
@@ -27,34 +29,43 @@ public class Main {
     }
 
     public static void main(String[] args) {
-        final int WIDTH = 1000;
-        final int HEIGHT = 1000;
+        final int WIDTH = 500;
+        final int HEIGHT = 500;
 
         // Setup the image buffer
         BufferedImage bufferedImage = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
 
         ArrayList<GeometricShape> geometricShapes = new ArrayList<>();
-        geometricShapes.add(new Sphere(new Vector3(0, 0, -50), 5));
+        geometricShapes.add(new Sphere(new Vector3(2, 0, -10), Color.RED, 1.5f));
+        geometricShapes.add(new Sphere(new Vector3(-2, 0, -15f), Color.GREEN, 1.2f));
+        geometricShapes.add(new Sphere(new Vector3(0, 0, -40), Color.CYAN, 15));
 
         long startTime = System.currentTimeMillis();
 
         for(int i = 0; i < WIDTH; i++){
             for(int j = 0; j < HEIGHT; j++){
+                float lastMinimumDepth = Float.MAX_VALUE;
                 Ray ray = new Ray(Vector3.zero(), getRayDirection(i, j, Vector3.zero(), 60, WIDTH, HEIGHT));
 
-                // test intersection with all the shapes of the scene
+                // Test intersection with all the shapes of the scene
                 for(GeometricShape shape : geometricShapes){
-                    Vector3 intersectionPosition = shape.intersect(ray);
-                    System.out.println(intersectionPosition.toString());
-                    if(!Vector3.equals(intersectionPosition, Vector3.zero())){
-                        System.out.println("TRUE");
-                        bufferedImage.setRGB(i, j, Color.RED.getRGB());
-                    }
-                    else{
+                    // Intersect and get the data and check if there is a hit
+                    IntersectionData intersectionData = shape.intersect(ray);
+                    if(intersectionData.getHasHit()){
+                        //
+                        if(intersectionData.getDepth() <= lastMinimumDepth){
+                            bufferedImage.setRGB(i, j, shape.getColor().getRGB());
+                            lastMinimumDepth = intersectionData.getDepth();
+                        } else {
+                            System.out.println("Something in between");
+                        }
+                    } else {
+                        System.out.println("Hit the sky");
                         bufferedImage.setRGB(i, j, Color.BLUE.getRGB());
-                        System.out.println("FALSE");
+
                     }
                 }
+                System.out.println("(" + i + ", " + j +")" + " pixel calculated");
             }
         }
 
