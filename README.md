@@ -5,12 +5,12 @@ This repository contains raytracing algorithm test for learning purposes. This w
 In this test you can find a basic raycasting algorithm. The objective of this test is to learn the camera model used in this types of algorithms and basic intersections with infinite planes and spheres. As raycasting is the most basic raytracing algorithm this is a good start to learn the basics. This test will support sphere, infinite plane, quad and cube intersection and some basic phong shading.
 
 ### Roadmap
-[X] Calculation of cameras pixels in world space
-[X] Intersection with spheres.
-[ ] Intersection with infinite planes.
-[ ] Intersection with quads.
-[ ] Intersection with cubes.
-[X] Depth testing
-[ ] Phong shading
-[ ] Shadows
-[ ] Reflections
+* [X] Calculation of cameras pixels in world space.
+* [X] Intersection with spheres.
+* [ ] Intersection with infinite planes.
+* [ ] Intersection with quads.
+* [ ] Intersection with cubes.
+* [X] Depth testing
+* [ ] Phong shading
+* [ ] Shadows
+* [ ] Reflections
