@@ -30,8 +30,6 @@ public class Main {
         raycaster.renderBackground();
         raycaster.renderShapes();
 
-
-
         System.out.println("Render finished!");
         long elapsed = System.currentTimeMillis() - startTime;
         System.out.println("Took " + ((float)elapsed/1000.0f) + " seconds to finish.");
