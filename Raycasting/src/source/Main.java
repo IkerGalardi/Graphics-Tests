@@ -36,12 +36,21 @@ public class Main {
         BufferedImage bufferedImage = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
 
         ArrayList<GeometricShape> geometricShapes = new ArrayList<>();
+        geometricShapes.add(new Sphere(new Vector3(0, 0, -40), Color.CYAN, 10));
         geometricShapes.add(new Sphere(new Vector3(2, 0, -10), Color.RED, 1.5f));
         geometricShapes.add(new Sphere(new Vector3(-2, 0, -15f), Color.GREEN, 1.2f));
-        geometricShapes.add(new Sphere(new Vector3(0, 0, -40), Color.CYAN, 15));
 
         long startTime = System.currentTimeMillis();
 
+
+        // Draw the sky first
+        for(int i = 0; i < WIDTH; i++){
+            for(int j = 0; j < HEIGHT; j++){
+                bufferedImage.setRGB(i, j, Color.BLUE.getRGB());
+            }
+        }
+
+        // Raycasting stuff
         for(int i = 0; i < WIDTH; i++){
             for(int j = 0; j < HEIGHT; j++){
                 float lastMinimumDepth = Float.MAX_VALUE;
@@ -52,17 +61,13 @@ public class Main {
                     // Intersect and get the data and check if there is a hit
                     IntersectionData intersectionData = shape.intersect(ray);
                     if(intersectionData.getHasHit()){
-                        //
-                        if(intersectionData.getDepth() <= lastMinimumDepth){
+                        // There is a hit! calculate the pixel and set last depth
+                        if(intersectionData.getDepth() < lastMinimumDepth){
                             bufferedImage.setRGB(i, j, shape.getColor().getRGB());
                             lastMinimumDepth = intersectionData.getDepth();
                         } else {
                             System.out.println("Something in between");
                         }
-                    } else {
-                        System.out.println("Hit the sky");
-                        bufferedImage.setRGB(i, j, Color.BLUE.getRGB());
-
                     }
                 }
                 System.out.println("(" + i + ", " + j +")" + " pixel calculated");
