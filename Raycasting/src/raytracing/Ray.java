@@ -13,10 +13,9 @@ public class Ray {
     }
 
     public Vector3 getPositionOnRay(float t){
-        if(t < 0){
-            System.out.println("Negative t");
+        if(t < 0)
             return Vector3.zero();
-        }
+
         return Vector3.add(origin, Vector3.mul(direction, t));
     }
 

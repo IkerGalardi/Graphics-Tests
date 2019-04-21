@@ -10,4 +10,5 @@ public abstract class Light {
     }
 
     public abstract float calculateLightIntensity(Vector3 point);
+    public abstract Vector3 getShadowCheckVector(Vector3 point);
 }

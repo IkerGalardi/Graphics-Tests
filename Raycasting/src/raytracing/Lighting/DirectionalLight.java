@@ -8,13 +8,18 @@ public class DirectionalLight extends Light {
 
     public DirectionalLight(Vector3 position, Vector3 direction, float intensity){
         super(position);
-        this.direction = direction;
+        this.direction = direction.normalized();
         this.intensity = intensity;
     }
 
     @Override
     public float calculateLightIntensity(Vector3 point) {
         return Math.abs(Math.min(1, intensity)); // Clamp the value between 0 and 1
+    }
+
+    @Override
+    public Vector3 getShadowCheckVector(Vector3 point) {
+        return Vector3.negative(direction);
     }
 
     public Vector3 getDirection() {

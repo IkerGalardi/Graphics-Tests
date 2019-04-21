@@ -1,6 +1,8 @@
 package raytracing;
 
 import math.Vector3;
+import raytracing.Lighting.Light;
+import raytracing.Shading.PhongShading;
 import raytracing.shapes.GeometricShape;
 
 import java.awt.*;
@@ -9,9 +11,15 @@ import java.util.ArrayList;
 
 public class Raycaster {
     private ArrayList<GeometricShape> shapes;
+    private ArrayList<Light> lights;
+
     private BufferedImage render;
+    private PhongShading shader;
+
     private int width, height;
     private float fov;
+
+
 
     public Raycaster(int width, int height, float fov){
         this.width = width;
@@ -19,12 +27,16 @@ public class Raycaster {
         this.fov = fov;
 
         shapes = new ArrayList<>();
+        lights = new ArrayList<>();
+
         render = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+        shader = new PhongShading();
     }
 
     public void addShape(GeometricShape shape){
         shapes.add(shape);
     }
+    public void addLight(Light light) { lights.add(light); }
 
     public void renderBackground(){
         for(int i = 0; i < width; i++){
@@ -35,6 +47,8 @@ public class Raycaster {
     }
 
     public void renderShapes(){
+        shader.setupShader(lights, shapes);
+
         for(int i = 0; i < width; i++){
             for(int j = 0; j < height; j++){
                 float lastMinimumDepth = Float.MAX_VALUE;
@@ -44,20 +58,18 @@ public class Raycaster {
                 for(GeometricShape shape : shapes){
                     // Intersect and get the data and check if there is a hit
                     IntersectionData intersectionData = shape.intersect(ray);
-                    if(intersectionData.getHasHit()){
-                        // There is a hit! calculate the pixel and set last depth
-                        if(intersectionData.getDepth() < lastMinimumDepth){
-                            render.setRGB(i, j, shape.getColor().getRGB());
-                            lastMinimumDepth = intersectionData.getDepth();
-                        } else {
-                            System.out.println("Something in between");
-                        }
+                    if(intersectionData.getHasHit() && intersectionData.getDepth() < lastMinimumDepth){
+                        // There is a hit! calculate the pixel and set last depth and Prepare the shader to render
+                        Vector3 hitPosition = ray.getPositionOnRay(intersectionData.getDepth());
+                        shader.setAttributes(shape.getNormal(hitPosition), hitPosition, shape.getColor());
+                        // Set the pixel color and set the depth test new value
+                        render.setRGB(i, j, shader.calculateColor().getRGB());
+                        lastMinimumDepth = intersectionData.getDepth();
                     }
                 }
                 System.out.println("(" + i + ", " + j +")" + " pixel calculated");
             }
         }
-
     }
 
     public BufferedImage getRenderResult() { return render; }
@@ -67,8 +79,6 @@ public class Raycaster {
         Vector3 pixelPosition = new Vector3(0,0,-1);
         pixelPosition.setX(((2 * x - width) * (float)Math.tan(fov))/(width));
         pixelPosition.setY(((2 * y - height) * (float)Math.tan((width/height) * fov))/(height));
-
-        System.out.println("Pixel position = " + pixelPosition);
 
         // Calculate the direction to the pixel
         return Vector3.sub(pixelPosition, origin);

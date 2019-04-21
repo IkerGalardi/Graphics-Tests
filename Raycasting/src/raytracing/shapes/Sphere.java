@@ -1,17 +1,21 @@
 package raytracing.shapes;
 
 import math.Vector3;
+import raytracing.FloatColor;
 import raytracing.IntersectionData;
 import raytracing.Ray;
-
-import java.awt.*;
 
 public class Sphere extends GeometricShape {
     private float radius;
 
-    public Sphere(Vector3 position, Color color, float radius){
+    public Sphere(Vector3 position, FloatColor color, float radius){
         super(position, color);
         this.radius = radius;
+    }
+
+    @Override
+    public Vector3 getNormal(Vector3 point) {
+        return Vector3.sub(position, point);
     }
 
     @Override
@@ -20,7 +24,7 @@ public class Sphere extends GeometricShape {
         Vector3 o = Vector3.sub(ray.getOrigin(), position);
         Vector3 d = ray.getDirection();
 
-        // The coefficients of the equation that needs to be solved to get t: ax² + bx + c
+        // The coefficients of the equation that needs to be solved to get t: at² + bt + c = 0
         float a = Vector3.dot(d, d);
         float b = 2 * Vector3.dot(o, d); // 2 * (o.getX() * d.getX() + o.getY() * d.getY() + o.getZ() * d.getZ())
         float c = Vector3.dot(o, o) - (radius * radius);//o.getX() * o.getX() + o.getY() * o.getY() + o.getZ() * o.getZ() - (radius * radius);
@@ -42,7 +46,6 @@ public class Sphere extends GeometricShape {
             intersectionData.setHasHit(false);
             intersectionData.setDepth(Float.MAX_VALUE);
             intersectionData.setHitPosition(new Vector3(Float.MAX_VALUE, Float.MAX_VALUE, Float.MAX_VALUE));
-
         }
 
         return intersectionData;

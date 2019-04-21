@@ -55,9 +55,9 @@ public class FloatColor
     }
 
     public Color toColor(){
-        int red = (int)r * 255;
-        int green = (int)g * 255;
-        int blue = (int)b * 255;
+        int red = (int)(r * 255);
+        int green = (int)(g * 255);
+        int blue = (int)(b * 255);
 
         return new Color(red, green, blue);
     }
