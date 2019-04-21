@@ -1,19 +1,13 @@
 package source;
 
 import math.Vector3;
-import raytracing.IntersectionData;
-import raytracing.Ray;
 import raytracing.Raycaster;
-import raytracing.shapes.GeometricShape;
-import raytracing.shapes.InfinitePlane;
 import raytracing.shapes.Sphere;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 
 public class Main {
 
