@@ -13,27 +13,25 @@ public class DirectionalLight extends Light {
     }
 
     @Override
-    public float calculateLightIntensity(Vector3 point) {
-        return Math.abs(Math.min(1, intensity)); // Clamp the value between 0 and 1
+    public float calculateLightIntensity(Vector3 point, Vector3 normal) {
+        float finalIntensity = Math.max(Vector3.dot(Vector3.neg(direction), normal), 0);
+        return Math.abs(Math.min(1, finalIntensity)); // Clamp the value between 0 and 1
     }
 
     @Override
     public Vector3 getShadowCheckVector(Vector3 point) {
-        return Vector3.negative(direction);
+        return Vector3.neg(direction);
     }
 
     public Vector3 getDirection() {
         return direction;
     }
-
     public void setDirection(Vector3 direction) {
         this.direction = direction;
     }
-
     public float getIntensity() {
         return intensity;
     }
-
     public void setIntensity(float intensity) {
         this.intensity = intensity;
     }

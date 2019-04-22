@@ -9,6 +9,6 @@ public abstract class Light {
         this.position = pos;
     }
 
-    public abstract float calculateLightIntensity(Vector3 point);
+    public abstract float calculateLightIntensity(Vector3 point, Vector3 normal);
     public abstract Vector3 getShadowCheckVector(Vector3 point);
 }

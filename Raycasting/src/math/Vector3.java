@@ -38,7 +38,7 @@ public class Vector3 {
         return new Vector3(vector.x * scalar, vector.y * scalar, vector.z * scalar);
     }
 
-    public static Vector3 negative(Vector3 vector){
+    public static Vector3 neg(Vector3 vector){
         return new Vector3(-vector.getX(), -vector.getY(), -vector.getZ());
     }
 

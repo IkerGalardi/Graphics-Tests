@@ -45,7 +45,7 @@ public class PhongShading extends Shader{
             Vector3 checkVector = light.getShadowCheckVector(position);
             if(isShadow(new Ray(position, checkVector))){
                 System.out.println("true");
-                intensity += light.calculateLightIntensity(position);
+                intensity += light.calculateLightIntensity(position, normal);
             }
         }
 

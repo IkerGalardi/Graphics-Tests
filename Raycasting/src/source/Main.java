@@ -20,7 +20,7 @@ public class Main {
         raycaster.addShape(new Sphere(new Vector3(2, 0, -10),   new FloatColor(1, 0, 0),      1.5f));
         raycaster.addShape(new Sphere(new Vector3(-2, 0, -15f), new FloatColor(0, 1, 0),      1.2f));
 
-        raycaster.addLight(new DirectionalLight(Vector3.zero(), new Vector3(0, -1, 0), 0.7f));
+        raycaster.addLight(new DirectionalLight(Vector3.zero(), new Vector3(1, -1, 1), 0.7f));
 
         long startTime = System.currentTimeMillis();
 
