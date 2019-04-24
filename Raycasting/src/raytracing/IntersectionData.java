@@ -7,9 +7,12 @@ public class IntersectionData {
     private float depth;
     private boolean hasHit;
 
+    public IntersectionData(){}
+
     public IntersectionData(Vector3 hitPosition, float depth, boolean hasHit){
         this.setHitPosition(hitPosition);
         this.setDepth(depth);
+        this.hasHit = hasHit;
     }
 
     public void setHasHit(boolean hasHit) { this.hasHit = hasHit; }

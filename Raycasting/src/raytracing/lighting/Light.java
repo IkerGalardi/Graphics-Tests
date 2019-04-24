@@ -1,9 +1,9 @@
-package raytracing.Lighting;
+package raytracing.lighting;
 
 import math.Vector3;
 
 public abstract class Light {
-    private Vector3 position;
+    protected Vector3 position;
 
     public Light(Vector3 pos){
         this.position = pos;

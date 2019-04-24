@@ -1,9 +1,9 @@
-package raytracing.Shading;
+package raytracing.shading;
 
 import math.Vector3;
 import raytracing.FloatColor;
 import raytracing.IntersectionData;
-import raytracing.Lighting.Light;
+import raytracing.lighting.Light;
 import raytracing.Ray;
 import raytracing.shapes.GeometricShape;
 

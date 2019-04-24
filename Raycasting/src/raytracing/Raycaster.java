@@ -1,8 +1,8 @@
 package raytracing;
 
 import math.Vector3;
-import raytracing.Lighting.Light;
-import raytracing.Shading.PhongShading;
+import raytracing.lighting.Light;
+import raytracing.shading.PhongShading;
 import raytracing.shapes.GeometricShape;
 
 import java.awt.*;
@@ -78,7 +78,7 @@ public class Raycaster {
         // Calculate the pixel position in world space
         Vector3 pixelPosition = new Vector3(0,0,-1);
         pixelPosition.setX(((2 * x - width) * (float)Math.tan(fov))/(width));
-        pixelPosition.setY(((2 * y - height) * (float)Math.tan((width/height) * fov))/(height));
+        pixelPosition.setY(-((2 * y - height) * (float)Math.tan((width/height) * fov))/(height));
 
         // Calculate the direction to the pixel
         return Vector3.sub(pixelPosition, origin);

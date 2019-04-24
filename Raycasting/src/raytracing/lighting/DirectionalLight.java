@@ -1,4 +1,4 @@
-package raytracing.Lighting;
+package raytracing.lighting;
 
 import math.Vector3;
 
@@ -14,7 +14,7 @@ public class DirectionalLight extends Light {
 
     @Override
     public float calculateLightIntensity(Vector3 point, Vector3 normal) {
-        float finalIntensity = Math.max(Vector3.dot(Vector3.neg(direction), normal), 0);
+        float finalIntensity = Math.max(Vector3.dot(direction, normal), 0);
         return Math.abs(Math.min(1, finalIntensity)); // Clamp the value between 0 and 1
     }
 

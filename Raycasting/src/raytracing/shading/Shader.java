@@ -1,4 +1,4 @@
-package raytracing.Shading;
+package raytracing.shading;
 
 import java.awt.*;
 
