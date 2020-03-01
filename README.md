@@ -1,4 +1,4 @@
-# Raytracing-Pathtraching-tests
+# Graphics Tests
 This repository contains raytracing algorithm test for learning purposes. This will eventually include more projects as a start testing more algorithms. This projects are not ready for distribution, as I will not be focusing on optimization, you should aproach this projects for learning purposes.
 
 ## Raycasting test
@@ -14,3 +14,14 @@ In this test you can find a basic raycasting algorithm. The objective of this te
 * [ ] Phong shading
 * [ ] Shadows
 * [ ] Reflections
+
+## OpenGL 
+This is used to learn the basics of OpenGL and aims to create an API with clases that abstract the basic functionality and boilerplate code.
+
+### Roadmap
+* [X] Getting a triangle rendered
+* [ ] Drawing a textured quad
+* [ ] Abstraction for buffers
+* [ ] Abstraction for textures
+* [ ] Abstraction for shaders
+* [ ] Basic camera and transformation
