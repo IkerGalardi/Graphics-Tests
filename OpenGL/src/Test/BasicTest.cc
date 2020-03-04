@@ -43,14 +43,14 @@ BasicTest::BasicTest()
     //shader.reset(GL::Shader::FromFiles(std::string("Shaders/texture.vert.glsl"), std::string("Shaders/texture.frag.glsl")));
     shader->Unbind();
 
-    texture.reset(new GL::Texture("download.jpeg"));
+    texture.reset(new GL::Texture("test.jpg"));
 
     float vertices[] = 
     {
-        -0.75f, -0.75f, 0.0f, 0.0f, 0.0f,
-         0.75f, -0.75f, 0.0f, 0.5f, 0.0f,
-         0.75f,  0.75f, 0.0f, 0.5f, 0.5f,
-        -0.75f,  0.75f, 0.0f, 0.0f, 0.5f,
+        -1.0f, -1.0f, 0.0f, 0.0f, 0.0f,
+         1.0f, -1.0f, 0.0f, 1.0f, 0.0f,
+         1.0f,  1.0f, 0.0f, 1.0f, 1.0f,
+        -1.0f,  1.0f, 0.0f, 0.0f, 1.0f,
     };
 
     glGenVertexArrays(1, &vertexArray);

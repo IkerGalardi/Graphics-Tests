@@ -77,7 +77,7 @@ int main(int argc, char** argv)
         SDL_Window* window = SDL_CreateWindow("Titulaso",
                                            SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
                                            WINDOW_SIZE,
-                                           SDL_WINDOW_SHOWN | SDL_WINDOW_OPENGL);
+                                           SDL_WINDOW_SHOWN | SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE);
         if(window == NULL) {
             std::cerr << "SDL window creation failed: " << SDL_GetError() << std::endl;
             std::exit(-1);

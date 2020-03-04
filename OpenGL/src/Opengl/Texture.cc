@@ -5,7 +5,6 @@
 #include <stdexcept>
 
 #include <GL/glew.h>
-#include <SOIL/SOIL.h>
 #include "Vendor/STBImage/STBImage.h"
 
 namespace GL
@@ -24,21 +23,21 @@ namespace GL
     		1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f
 		};
 
-		std::cout << width << ", " << height << std::endl;
+		std::cout << "(" << width << ", " << height << ")" << std::endl;
 
 		glGenTextures(1, &TextureID);
 		glBindTexture(GL_TEXTURE_2D, TextureID);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
 
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, image);
 		glGenerateMipmap(GL_TEXTURE_2D);
 		//glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 2, 2, 0, GL_RGB, GL_FLOAT, temp);
 
 		glBindTexture(GL_TEXTURE_2D, 0);
-		SOIL_free_image_data(image);
+		stbi_image_free(image);
 	}
     
     Texture::~Texture()
