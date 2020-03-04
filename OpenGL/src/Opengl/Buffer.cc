@@ -12,6 +12,14 @@ namespace GL
         glGenBuffers(1, &BufferID);
         SetData(buffer, bufferSize);
     }
+
+    Buffer::Buffer(unsigned int bufferType, unsigned int drawType)
+        : 
+        BufferType(bufferType),
+        DrawType(drawType)
+    {
+        glGenBuffers(1, &BufferID);
+    }
     Buffer::~Buffer()
     {
         glDeleteBuffers(1, &BufferID);

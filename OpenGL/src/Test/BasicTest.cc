@@ -53,22 +53,20 @@ BasicTest::BasicTest()
         -1.0f,  1.0f, 0.0f, 0.0f, 1.0f,
     };
 
-    glGenVertexArrays(1, &vertexArray);
-    glBindVertexArray(vertexArray);
-
-    glGenBuffers(1, &vertexBuffer);
-    glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-
     unsigned int elements[] =
     {
         0, 1, 2,
         2, 3, 0
     };
 
-    glGenBuffers(1, &elementBuffer);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, elementBuffer);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(elements), elements, GL_STATIC_DRAW);
+    glGenVertexArrays(1, &vertexArray);
+    glBindVertexArray(vertexArray);
+
+    cvertexBuffer.reset(new GL::Buffer(GL_ARRAY_BUFFER, GL_STATIC_DRAW));
+    cvertexBuffer->SetData(vertices, sizeof(vertices));
+
+    cindexBuffer.reset(new GL::Buffer(GL_ELEMENT_ARRAY_BUFFER, GL_STATIC_DRAW));
+    cindexBuffer->SetData(elements, sizeof(elements));
 
     glEnableVertexAttribArray(0);
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (const void*)0);
@@ -78,8 +76,6 @@ BasicTest::BasicTest()
 
 BasicTest::~BasicTest() 
 {
-    glDeleteBuffers(1, &vertexBuffer);
-    glDeleteBuffers(1, &elementBuffer);
 }
 
 void BasicTest::Update()
