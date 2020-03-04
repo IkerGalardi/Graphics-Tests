@@ -31,20 +31,31 @@ namespace GL
             glDeleteVertexArrays(1, &VertexArrayID);
         }
 
+
+        void VertexArray::Bind()
+        {
+            glBindVertexArray(VertexArrayID);
+        }
+        void VertexArray::Unbind()
+        {
+            glBindVertexArray(0);
+        }
+
         void VertexArray::SetAttributes(std::initializer_list<Attribute> attributes)
         {
             unsigned int stride = 0;            
             for(Attribute attrib : attributes)
-                stride += GetSizeFromGLType(attrib.Type);
+                stride += attrib.Count * GetSizeFromGLType(attrib.Type);
             
             glBindVertexArray(VertexArrayID);
             
             unsigned int i = 0;
-            unsigned int offset;
+            unsigned long offset = 0;
             for(Attribute attrib : attributes) {
+                glEnableVertexAttribArray(i);
                 int size = GetSizeFromGLType(attrib.Type);
-                glVertexAttribPointer(i, size, attrib.Type, GL_FALSE, stride, (const void*)offset);
-                offset += size;
+                glVertexAttribPointer(i, attrib.Count, attrib.Type, GL_FALSE, stride, (const void*)offset);
+                offset += attrib.Count * size;
                 i++;
             }
         }

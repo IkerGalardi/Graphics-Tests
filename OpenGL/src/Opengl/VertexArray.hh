@@ -11,7 +11,6 @@ namespace GL
     {
         unsigned int Count;
         unsigned int Type;
-        unsigned int Offset;
     };
 
     class VertexArray
@@ -19,6 +18,9 @@ namespace GL
     public:
         VertexArray();
         ~VertexArray();
+
+        void Bind();
+        void Unbind();
 
         void SetAttributes(std::initializer_list<Attribute> attributes); 
     private:

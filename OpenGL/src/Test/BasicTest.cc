@@ -59,19 +59,17 @@ BasicTest::BasicTest()
         2, 3, 0
     };
 
-    glGenVertexArrays(1, &vertexArray);
-    glBindVertexArray(vertexArray);
+    VertexArray.reset(new GL::VertexArray());
+    VertexArray->Bind();
 
-    cvertexBuffer.reset(new GL::Buffer(GL_ARRAY_BUFFER, GL_STATIC_DRAW));
-    cvertexBuffer->SetData(vertices, sizeof(vertices));
+    VertexBuffer.reset(new GL::Buffer(GL_ARRAY_BUFFER, GL_STATIC_DRAW));
+    VertexBuffer->SetData(vertices, sizeof(vertices));
 
-    cindexBuffer.reset(new GL::Buffer(GL_ELEMENT_ARRAY_BUFFER, GL_STATIC_DRAW));
-    cindexBuffer->SetData(elements, sizeof(elements));
+    IndexBuffer.reset(new GL::Buffer(GL_ELEMENT_ARRAY_BUFFER, GL_STATIC_DRAW));
+    IndexBuffer->SetData(elements, sizeof(elements));
 
-    glEnableVertexAttribArray(0);
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (const void*)0);
-    glEnableVertexAttribArray(1);
-    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (const void*)12);
+    VertexArray->SetAttributes({{3, GL_FLOAT},
+                                {2, GL_FLOAT}});
 }
 
 BasicTest::~BasicTest() 
@@ -82,7 +80,7 @@ void BasicTest::Update()
 {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     
-    glBindVertexArray(vertexArray);
+    VertexArray->Bind();
 
     texture->Bind(0);
     shader->Bind();
