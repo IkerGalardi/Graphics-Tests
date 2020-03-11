@@ -7,8 +7,9 @@
 
 #include "Test/Test.hh"
 #include "Test/BasicTest.hh"
+#include "Test/TransformationTest/TransformationTest.hh"
 
-#define WINDOW_SIZE 400, 400
+#define WINDOW_SIZE 600, 600
 
 void GLAPIENTRY MessageCallback( GLenum source,
                  GLenum type,
@@ -34,9 +35,7 @@ void GLAPIENTRY MessageCallback( GLenum source,
             severityString = "LOW";
             break;
 
-        case GL_DEBUG_SEVERITY_NOTIFICATION:
-            severityString = "NOTIF";
-            break;
+        case GL_DEBUG_SEVERITY_NOTIFICATION: return;
         
         default:
             severityString = "lel";
@@ -101,7 +100,7 @@ int main(int argc, char** argv)
         std::cout << "GLSL version: " << glGetString(GL_SHADING_LANGUAGE_VERSION) << std::endl;
         
         std::unique_ptr<Test> test;
-        test.reset(new BasicTest());
+        test.reset(new TransformationTest());
 
         SDL_Event event;
         bool running = true;

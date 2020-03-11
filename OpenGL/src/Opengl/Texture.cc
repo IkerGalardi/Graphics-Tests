@@ -13,7 +13,6 @@ namespace GL
     {
 		int width, height, channels;
 
-		//unsigned char* image = SOIL_load_image(filepath, &width, &height, 0, SOIL_LOAD_RGB);
 		stbi_set_flip_vertically_on_load(true);
 		unsigned char* image = stbi_load(filepath, &width, &height, 0, STBI_rgb);
 
@@ -22,8 +21,6 @@ namespace GL
     		0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f,
     		1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f
 		};
-
-		std::cout << "(" << width << ", " << height << ")" << std::endl;
 
 		glGenTextures(1, &TextureID);
 		glBindTexture(GL_TEXTURE_2D, TextureID);
@@ -34,7 +31,6 @@ namespace GL
 
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, image);
 		glGenerateMipmap(GL_TEXTURE_2D);
-		//glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 2, 2, 0, GL_RGB, GL_FLOAT, temp);
 
 		glBindTexture(GL_TEXTURE_2D, 0);
 		stbi_image_free(image);

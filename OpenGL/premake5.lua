@@ -34,8 +34,7 @@ workspace "gltests"
             "SDL2",
             "GLEW",
             "GL",
-            "X11",
-            "SOIL"
+            "X11"
         }
 
         filter "configurations:Debug"
