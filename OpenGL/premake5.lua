@@ -21,7 +21,9 @@ workspace "gltests"
             "src/**.hh",
             "src/**.cc",
             "src/**.c",
-            "src,**.h"
+            "src/**.h",
+            "src/**.cpp",
+            "src/**.hpp"
         }
 
         includedirs

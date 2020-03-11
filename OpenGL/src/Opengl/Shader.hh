@@ -2,7 +2,9 @@
 
 #include <string>
 #include <memory>
+
 #include "Texture.hh"
+#include "Vendor/GLM/glm.hpp"
 
 namespace GL
 {
@@ -19,6 +21,9 @@ namespace GL
         static Shader* FromFiles(const std::string& vertexFile, const std::string& fragmentFile);
         
         void SetUniformTexture(const char* name, unsigned int textureSlot);
+        void SetUniformVector(const char* name, const glm::vec2& vector);
+        void SetUniformVector(const char* name, const glm::vec3& vector);
+        void SetUniformMatrix(const char* name, const glm::mat4& matrix);
     private:
         void PrintShaderErrors(unsigned int shaderType, int shaderID);
 

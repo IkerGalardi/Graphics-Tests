@@ -5,6 +5,9 @@
 #include <sstream>
 #include <GL/glew.h>
 
+#include "Vendor/GLM/gtc/type_ptr.hpp"
+#include "Vendor/GLM/gtc/matrix_transform.hpp"
+
 #define PRINT(X) std::cout << X << std::endl
 
 namespace GL 
@@ -71,7 +74,24 @@ namespace GL
 
         return new Shader(vertexSource, fragmentSource);
     }
+    
+    void Shader::SetUniformVector(const char* name, const glm::vec2& vector)
+    {
+        int loc = glGetUniformLocation(ProgramID, name);
+        glUniform2f(loc, vector.x, vector.y);
+    }
 
+    void Shader::SetUniformVector(const char* name, const glm::vec3& vector)
+    {
+        int loc = glGetUniformLocation(ProgramID, name);
+        glUniform3f(loc, vector.x, vector.y, vector.z);
+    }
+    
+    void Shader::SetUniformMatrix(const char* name, const glm::mat4& matrix)
+    {
+        int loc = glGetUniformLocation(ProgramID, name);
+        glUniformMatrix4fv(loc, 1, GL_FALSE, glm::value_ptr(matrix));
+    }
     void Shader::SetUniformTexture(const char* name, unsigned int textureSlot)
     {
         int loc = glGetUniformLocation(ProgramID, name);
