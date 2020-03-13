@@ -20,8 +20,8 @@ This is used to learn the basics of OpenGL and aims to create an API with clases
 
 ### Roadmap
 * [X] Getting a triangle rendered
-* [ ] Drawing a textured quad
-* [ ] Abstraction for buffers
-* [ ] Abstraction for textures
-* [ ] Abstraction for shaders
-* [ ] Basic camera and transformation
+* [X] Drawing a textured quad
+* [X] Abstraction for buffers
+* [X] Abstraction for textures
+* [X] Abstraction for shaders
+* [X] Basic camera and transformation
