@@ -1,5 +1,7 @@
 #pragma once
 
+#include <SDL2/SDL.h>
+
 class Test 
 {
 public:
@@ -8,6 +10,7 @@ public:
 
     virtual void Update() {}
     virtual void OnWindowResize(int newX, int newY) {}
+    virtual void OnKeyPressed(SDL_Scancode keycode) {}
 private:
 protected:
 };

@@ -1,5 +1,6 @@
 #include "TransformationTest.hh"
 
+#include <iostream>
 #include <GL/glew.h>
 
 #include "Vendor/GLM/gtc/matrix_transform.hpp"
@@ -79,7 +80,9 @@ void TransformationTest::Update()
 {
     // Create transformation matrix and send to shader
     Shader->Bind();
-    TransformationMatrix = ProjectionMatrix;
+    glm::mat4 objTransform(1.0f);
+    objTransform = glm::translate(objTransform, TexturePosition);
+    TransformationMatrix = objTransform * ProjectionMatrix;
     Shader->SetUniformMatrix("transformation", TransformationMatrix);
 
     // Clear screen and render
@@ -93,6 +96,27 @@ void TransformationTest::OnWindowResize(int newX, int newY)
     glViewport(0, 0, newX, newY);
 
     float aspectRatio = (float)newX / (float)newY;
-
     ProjectionMatrix = glm::ortho(-aspectRatio, aspectRatio, -1.0f, 1.0f);
+}
+
+void TransformationTest::OnKeyPressed(SDL_Scancode keycode) 
+{
+    float speed = .1f;
+
+    if(keycode == SDL_SCANCODE_W)
+    {
+        TexturePosition.y += speed;
+    }
+    else if(keycode == SDL_SCANCODE_S)
+    {
+        TexturePosition.y -= speed;
+    }
+    else if(keycode == SDL_SCANCODE_A)
+    {
+        TexturePosition.x -= speed;
+    }
+    else if(keycode == SDL_SCANCODE_D)
+    {
+        TexturePosition.x += speed;
+    }
 }

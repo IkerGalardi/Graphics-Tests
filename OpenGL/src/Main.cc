@@ -118,6 +118,11 @@ int main(int argc, char** argv)
                             case SDL_WINDOWEVENT_RESIZED:
                                 test->OnWindowResize(event.window.data1, event.window.data2);
                         }
+                        break;
+
+                    case SDL_KEYDOWN:
+                        test->OnKeyPressed(event.key.keysym.scancode);
+                        break;                    
                 }
             }
 

@@ -13,6 +13,7 @@ public:
 
     void Update() override;
     void OnWindowResize(int newX, int newY) override;
+    void OnKeyPressed(SDL_Scancode keycode) override;
 private:
     std::unique_ptr<GL::Shader> Shader;
     std::unique_ptr<GL::Texture> Texture;
