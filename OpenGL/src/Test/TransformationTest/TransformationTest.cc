@@ -8,7 +8,12 @@
 TransformationTest::TransformationTest()
     :
     TexturePosition(0.0f, 0.0f ,0.0f),
-    ProjectionMatrix(glm::ortho(-1, 1, -1, 1))
+    ProjectionMatrix(glm::ortho(-1, 1, -1, 1)),
+    ObjectTransform(1.0f),
+    MouseDown(false),
+    WindowHeight(400),
+    WindowWidth(400),
+    AspectRatio(1)
 {
     // Enable depth testing
     glEnable(GL_DEPTH_TEST);
@@ -93,10 +98,16 @@ void TransformationTest::Update()
 }
 void TransformationTest::OnWindowResize(int newX, int newY)
 {
+    // Local variables
+    WindowHeight = newY;
+    WindowWidth = newX;
+
+    // Framebuffer resizing
     glViewport(0, 0, newX, newY);
 
-    float aspectRatio = (float)newX / (float)newY;
-    ProjectionMatrix = glm::ortho(-aspectRatio, aspectRatio, -1.0f, 1.0f);
+    // Projection matrix update
+    AspectRatio = (float)newX / (float)newY;
+    ProjectionMatrix = glm::ortho(-AspectRatio, AspectRatio, -1.0f, 1.0f);
 }
 
 void TransformationTest::OnKeyPressed(SDL_Scancode keycode) 
@@ -119,4 +130,30 @@ void TransformationTest::OnKeyPressed(SDL_Scancode keycode)
     {
         TexturePosition.x += speed;
     }
+}
+
+void TransformationTest::OnMouseMovement(int deltaX, int deltaY)
+{
+    if(MouseDown)
+    {
+        float movementSpeed = 2.0f;
+        float normalizedDeltaX = (float)deltaX / (float)WindowWidth;
+        float normalizedDeltaY = (float)deltaY / (float)WindowHeight;
+
+        TexturePosition.x += normalizedDeltaX * AspectRatio;
+        TexturePosition.y += -normalizedDeltaY * AspectRatio;
+        std::cout << TexturePosition.x << ", " << TexturePosition.y << std::endl;
+    }
+}
+
+void TransformationTest::OnMouseButtonDown()
+{
+    std::cout << "MouseDown\n";
+    MouseDown = true;
+}
+
+void TransformationTest::OnMouseButtonUp() 
+{
+    std::cout << "MouseUp\n";
+    MouseDown = false;
 }

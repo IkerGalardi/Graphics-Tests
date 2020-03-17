@@ -122,7 +122,23 @@ int main(int argc, char** argv)
 
                     case SDL_KEYDOWN:
                         test->OnKeyPressed(event.key.keysym.scancode);
-                        break;                    
+                        break;
+
+                    case SDL_KEYUP:
+                        test->OnKeyReleased(event.key.keysym.scancode);
+                        break;
+
+                    case SDL_MOUSEMOTION:
+                        test->OnMouseMovement(event.motion.xrel, event.motion.yrel);
+                        break;
+
+                    case SDL_MOUSEBUTTONDOWN:
+                        test->OnMouseButtonDown();
+                        break;
+                    
+                    case SDL_MOUSEBUTTONUP:
+                        test->OnMouseButtonUp();
+                        break;
                 }
             }
 

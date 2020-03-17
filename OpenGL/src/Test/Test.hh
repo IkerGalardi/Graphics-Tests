@@ -10,7 +10,11 @@ public:
 
     virtual void Update() {}
     virtual void OnWindowResize(int newX, int newY) {}
-    virtual void OnKeyPressed(SDL_Scancode keycode) {}
+    virtual void OnKeyPressed(SDL_Scancode scancode) {}
+    virtual void OnKeyReleased(SDL_Scancode scancode) {}
+    virtual void OnMouseButtonDown() {}
+    virtual void OnMouseButtonUp() {}
+    virtual void OnMouseMovement(int deltaX, int deltaY) {}
 private:
 protected:
 };

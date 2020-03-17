@@ -13,7 +13,10 @@ public:
 
     void Update() override;
     void OnWindowResize(int newX, int newY) override;
+    void OnMouseMovement(int deltaX, int deltaY) override;
     void OnKeyPressed(SDL_Scancode keycode) override;
+    void OnMouseButtonDown() override;
+    void OnMouseButtonUp() override;
 private:
     std::unique_ptr<GL::Shader> Shader;
     std::unique_ptr<GL::Texture> Texture;
@@ -23,6 +26,11 @@ private:
 
     glm::mat4 ProjectionMatrix;
     glm::mat4 TransformationMatrix;
+    glm::mat4 ObjectTransform;
     glm::vec3 TexturePosition;
+
+    bool MouseDown;
+    int WindowHeight, WindowWidth;
+    float AspectRatio;
 protected:
 };
