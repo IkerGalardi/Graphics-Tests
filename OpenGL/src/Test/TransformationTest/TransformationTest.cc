@@ -136,7 +136,6 @@ void TransformationTest::OnMouseMovement(int deltaX, int deltaY)
 {
     if(MouseDown)
     {
-        float movementSpeed = 2.0f;
         float normalizedDeltaX = (float)deltaX / (float)WindowWidth;
         float normalizedDeltaY = (float)deltaY / (float)WindowHeight;
 
@@ -148,12 +147,10 @@ void TransformationTest::OnMouseMovement(int deltaX, int deltaY)
 
 void TransformationTest::OnMouseButtonDown()
 {
-    std::cout << "MouseDown\n";
     MouseDown = true;
 }
 
 void TransformationTest::OnMouseButtonUp() 
 {
-    std::cout << "MouseUp\n";
     MouseDown = false;
 }
