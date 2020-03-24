@@ -29,11 +29,13 @@ TransformationTest::TransformationTest()
     "#version 330 core\n"
     "layout (location = 0) in vec3 aPos;\n"
     "layout (location = 1) in vec2 aTexCoord;\n"
-    "uniform mat4 transformation;"
+    "uniform mat4 transformation;\n"
+    "uniform mat4 projection;"
     "out vec2 TexCoord;\n"
     "void main()\n"
     "{\n"
-    "   gl_Position = transformation * vec4(aPos.x, aPos.y, aPos.z, 1.0);\n"
+    "   mat4 t = projection * transformation;"
+    "   gl_Position = t * vec4(aPos.x, aPos.y, aPos.z, 1.0);\n"
     "   TexCoord = aTexCoord;\n"
     "}\0";
 
@@ -76,6 +78,11 @@ TransformationTest::TransformationTest()
     VertexArray->SetAttributes({{3, GL_FLOAT}, {2, GL_FLOAT}});
 
     Texture = std::make_unique<GL::Texture>("test.jpg");
+
+    ObjectTransform = glm::translate(glm::mat4(1.0f), TexturePosition);
+    Shader->Bind();
+    Shader->SetUniformMatrix("transformation", ObjectTransform);
+    Shader->SetUniformMatrix("projection", ProjectionMatrix);
 }
 TransformationTest::~TransformationTest()
 {
@@ -85,11 +92,7 @@ void TransformationTest::Update()
 {
     // Create transformation matrix and send to shader
     Shader->Bind();
-    glm::mat4 objTransform(1.0f);
-    objTransform = glm::translate(objTransform, TexturePosition);
-    TransformationMatrix = objTransform * ProjectionMatrix;
-    Shader->SetUniformMatrix("transformation", TransformationMatrix);
-
+    Shader->SetUniformMatrix("transformation", ObjectTransform);
     // Clear screen and render
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     VertexArray->Bind();
@@ -108,6 +111,7 @@ void TransformationTest::OnWindowResize(int newX, int newY)
     // Projection matrix update
     AspectRatio = (float)newX / (float)newY;
     ProjectionMatrix = glm::ortho(-AspectRatio, AspectRatio, -1.0f, 1.0f);
+    Shader->SetUniformMatrix("projection", ProjectionMatrix);
 }
 
 void TransformationTest::OnKeyPressed(SDL_Scancode keycode) 
@@ -141,7 +145,9 @@ void TransformationTest::OnMouseMovement(int deltaX, int deltaY)
 
         TexturePosition.x += normalizedDeltaX * AspectRatio;
         TexturePosition.y += -normalizedDeltaY * AspectRatio;
-        std::cout << TexturePosition.x << ", " << TexturePosition.y << std::endl;
+        
+        ObjectTransform = glm::translate(glm::mat4(1.0f), TexturePosition);
+        Shader->SetUniformMatrix("transformation", ObjectTransform);
     }
 }
 
