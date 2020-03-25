@@ -83,6 +83,7 @@ int main(int argc, char** argv)
         }
         SDL_GLContext context = SDL_GL_CreateContext(window);
         SDL_GL_MakeCurrent(window, context);
+        SDL_GL_SetSwapInterval(0);
 
         // Initialize opengl
         glewExperimental = true;

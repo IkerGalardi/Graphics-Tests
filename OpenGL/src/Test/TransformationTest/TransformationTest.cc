@@ -93,6 +93,7 @@ void TransformationTest::Update()
     // Create transformation matrix and send to shader
     Shader->Bind();
     Shader->SetUniformMatrix("transformation", ObjectTransform);
+    
     // Clear screen and render
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     VertexArray->Bind();
