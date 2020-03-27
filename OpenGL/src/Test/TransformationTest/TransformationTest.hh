@@ -13,7 +13,7 @@ public:
 
     void Update() override;
     void OnWindowResize(int newX, int newY) override;
-    void OnMouseMovement(int deltaX, int deltaY) override;
+    void OnMouseMovement(int mouseX, int mouseY, int deltaX, int deltaY) override;
     void OnKeyPressed(SDL_Scancode keycode) override;
     void OnMouseButtonDown() override;
     void OnMouseButtonUp() override;
@@ -32,5 +32,7 @@ private:
     bool MouseDown;
     int WindowHeight, WindowWidth;
     float AspectRatio;
+
+    glm::vec4 ScreenToWorld(float mouseX, float mouseY);
 protected:
 };

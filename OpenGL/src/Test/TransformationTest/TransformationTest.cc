@@ -137,15 +137,15 @@ void TransformationTest::OnKeyPressed(SDL_Scancode keycode)
     }
 }
 
-void TransformationTest::OnMouseMovement(int deltaX, int deltaY)
+void TransformationTest::OnMouseMovement(int mouseX, int mouseY, int deltaX, int deltaY)
 {
     if(MouseDown)
     {
         float normalizedDeltaX = (float)deltaX / (float)WindowWidth;
         float normalizedDeltaY = (float)deltaY / (float)WindowHeight;
 
-        TexturePosition.x += normalizedDeltaX * AspectRatio;
-        TexturePosition.y += -normalizedDeltaY * AspectRatio;
+        glm::vec4 worldDelta = ScreenToWorld(normalizedDeltaX, normalizedDeltaY);
+        TexturePosition += glm::vec3(worldDelta);
         
         ObjectTransform = glm::translate(glm::mat4(1.0f), TexturePosition);
         Shader->SetUniformMatrix("transformation", ObjectTransform);
@@ -160,4 +160,10 @@ void TransformationTest::OnMouseButtonDown()
 void TransformationTest::OnMouseButtonUp() 
 {
     MouseDown = false;
+}
+
+glm::vec4 TransformationTest::ScreenToWorld(float mouseX, float mouseY)
+{
+    std::cout << mouseX << ", " << mouseY << std::endl;
+    return TransformationMatrix * glm::vec4(mouseX, mouseY, 0.0f, 0.0f);
 }

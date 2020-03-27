@@ -14,7 +14,7 @@ public:
     virtual void OnKeyReleased(SDL_Scancode scancode) {}
     virtual void OnMouseButtonDown() {}
     virtual void OnMouseButtonUp() {}
-    virtual void OnMouseMovement(int deltaX, int deltaY) {}
+    virtual void OnMouseMovement(int mouseX, int mouseY, int deltaX, int deltaY) {}
 private:
 protected:
 };

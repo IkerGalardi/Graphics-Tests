@@ -130,7 +130,8 @@ int main(int argc, char** argv)
                         break;
 
                     case SDL_MOUSEMOTION:
-                        test->OnMouseMovement(event.motion.xrel, event.motion.yrel);
+                        test->OnMouseMovement(event.motion.x, event.motion.y,
+                                              event.motion.xrel, event.motion.yrel);
                         break;
 
                     case SDL_MOUSEBUTTONDOWN:
