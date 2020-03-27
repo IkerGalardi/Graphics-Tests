@@ -5,14 +5,16 @@
 
 #include "Vendor/GLM/gtc/matrix_transform.hpp"
 
+#define PRINTVECTOR2(n, v) std::cout << n << " = (" << v.x << ", " << v.y << ")" << std::endl;
+
 TransformationTest::TransformationTest()
     :
     TexturePosition(0.0f, 0.0f ,0.0f),
     ProjectionMatrix(glm::ortho(-1, 1, -1, 1)),
     ObjectTransform(1.0f),
     MouseDown(false),
-    WindowHeight(400),
-    WindowWidth(400),
+    WindowHeight(600),
+    WindowWidth(600),
     AspectRatio(1)
 {
     // Enable depth testing
@@ -34,7 +36,7 @@ TransformationTest::TransformationTest()
     "out vec2 TexCoord;\n"
     "void main()\n"
     "{\n"
-    "   mat4 t = projection * transformation;"
+    "   mat4 t = transformation * projection;"
     "   gl_Position = t * vec4(aPos.x, aPos.y, aPos.z, 1.0);\n"
     "   TexCoord = aTexCoord;\n"
     "}\0";
@@ -139,13 +141,14 @@ void TransformationTest::OnKeyPressed(SDL_Scancode keycode)
 
 void TransformationTest::OnMouseMovement(int mouseX, int mouseY, int deltaX, int deltaY)
 {
+    glm::vec2 n = MouseToNDC(mouseX, mouseY);
+    std::cout << n.x << ", " << n.y << std::endl;
+
     if(MouseDown)
     {
-        float normalizedDeltaX = (float)deltaX / (float)WindowWidth;
-        float normalizedDeltaY = (float)deltaY / (float)WindowHeight;
-
-        glm::vec4 worldDelta = ScreenToWorld(normalizedDeltaX, normalizedDeltaY);
-        TexturePosition += glm::vec3(worldDelta);
+        glm::vec2 normalizedMouse = MouseToNDC(mouseX, mouseY);
+        glm::vec4 worldDelta = ScreenToWorld(normalizedMouse.x, normalizedMouse.y);
+        TexturePosition = glm::vec3(worldDelta.x * AspectRatio, worldDelta.y, 0.0f);
         
         ObjectTransform = glm::translate(glm::mat4(1.0f), TexturePosition);
         Shader->SetUniformMatrix("transformation", ObjectTransform);
@@ -164,6 +167,15 @@ void TransformationTest::OnMouseButtonUp()
 
 glm::vec4 TransformationTest::ScreenToWorld(float mouseX, float mouseY)
 {
-    std::cout << mouseX << ", " << mouseY << std::endl;
-    return TransformationMatrix * glm::vec4(mouseX, mouseY, 0.0f, 0.0f);
+    glm::vec4 v4 = ProjectionMatrix * glm::vec4(mouseX, mouseY, 0.0f, 0.0f);
+    //std::cout << v4.x << ", " << v4.y << ", " << v4.z << ", " << v4.w << std::endl;
+    return v4;
+}
+
+glm::vec2 TransformationTest::MouseToNDC(int mouseX, int mouseY)
+{
+    glm::vec2 almostNormalized((float)mouseX / (float)WindowWidth, (float)mouseY / (float)WindowHeight);
+    glm::vec2 almostResult = almostNormalized - glm::vec2(0.5f, 0.5f);
+    glm::vec2 result(2.0f *almostResult.x, 2.0f * -almostResult.y); 
+    return 2.0f * result;
 }

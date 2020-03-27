@@ -34,5 +34,6 @@ private:
     float AspectRatio;
 
     glm::vec4 ScreenToWorld(float mouseX, float mouseY);
+    glm::vec2 MouseToNDC(int mouseX, int mouseY);
 protected:
 };
