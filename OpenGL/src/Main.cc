@@ -8,6 +8,7 @@
 #include "Test/Test.hh"
 #include "Test/BasicTest.hh"
 #include "Test/TransformationTest.hh"
+#include "Test/PostProcessingTest.hh"
 
 #define WINDOW_SIZE 600, 600
 
@@ -101,7 +102,7 @@ int main(int argc, char** argv)
         std::cout << "GLSL version: " << glGetString(GL_SHADING_LANGUAGE_VERSION) << std::endl;
         
         std::unique_ptr<Test> test;
-        test.reset(new TransformationTest());
+        test.reset(new PostProcessingTest());
 
         SDL_Event event;
         bool running = true;
