@@ -7,7 +7,7 @@
 
 #include "Test/Test.hh"
 #include "Test/BasicTest.hh"
-#include "Test/TransformationTest/TransformationTest.hh"
+#include "Test/TransformationTest.hh"
 
 #define WINDOW_SIZE 600, 600
 

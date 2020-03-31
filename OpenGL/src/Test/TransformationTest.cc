@@ -177,5 +177,5 @@ glm::vec2 TransformationTest::MouseToNDC(int mouseX, int mouseY)
     glm::vec2 almostNormalized((float)mouseX / (float)WindowWidth, (float)mouseY / (float)WindowHeight);
     glm::vec2 almostResult = almostNormalized - glm::vec2(0.5f, 0.5f);
     glm::vec2 result(2.0f *almostResult.x, 2.0f * -almostResult.y); 
-    return 2.0f * result;
+    return result;
 }
