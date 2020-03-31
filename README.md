@@ -25,3 +25,4 @@ This is used to learn the basics of OpenGL and aims to create an API with clases
 * [X] Abstraction for textures
 * [X] Abstraction for shaders
 * [X] Basic camera and transformation
+* [ ] Postprocessing with framebuffers
