@@ -27,31 +27,6 @@ PostProcessingTest::PostProcessingTest()
     // Set clear color
     glClearColor(0.0f, 1.0f, 0.0f, 1.0f);
 
-    const char* vertexSource = 
-    "#version 330 core\n"
-    "layout (location = 0) in vec3 aPos;\n"
-    "layout (location = 1) in vec2 aTexCoord;\n"
-    "uniform mat4 transformation;\n"
-    "uniform mat4 projection;"
-    "out vec2 TexCoord;\n"
-    "void main()\n"
-    "{\n"
-    "   mat4 t = transformation * projection;"
-    "   gl_Position = t * vec4(aPos.x, aPos.y, aPos.z, 1.0);\n"
-    "   TexCoord = aTexCoord;\n"
-    "}\0";
-
-    const char* fragmentSource = 
-    "#version 330 core\n"
-    "in vec2 TexCoord;\n"
-    "out vec4 FragColor;\n"
-    "uniform sampler2D text;\n"
-    "void main()\n"
-    "{\n"
-    "   FragColor = vec4(TexCoord ,0.0f, 1.0f);\n"
-    "   FragColor = texture(text, TexCoord);\n"
-    "}\0";
-
     float vertices[] = 
     {
         -1.0f, -1.0f, 0.0f, 0.0f, 0.0f,
@@ -66,7 +41,7 @@ PostProcessingTest::PostProcessingTest()
         2, 3, 0
     };
 
-    Shader = std::make_unique<GL::Shader>(vertexSource, fragmentSource);
+    Shader.reset(GL::Shader::FromFile("assets/shaders/textured.glsl"));
 
     VertexArray = std::make_unique<GL::VertexArray>();
     VertexArray->Bind();

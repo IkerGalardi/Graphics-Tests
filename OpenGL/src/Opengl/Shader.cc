@@ -3,6 +3,8 @@
 #include <fstream>
 #include <iostream> 
 #include <sstream>
+#include <cstdio>
+
 #include <GL/glew.h>
 
 #include "Vendor/GLM/gtc/type_ptr.hpp"
@@ -12,14 +14,6 @@
 
 namespace GL 
 {
-    static std::string ReadFileString(std::string path)
-    {
-        std::ifstream file(path);
-        std::stringstream stream;
-        stream << file.rdbuf();
-        return stream.str().append("\0");
-    }
-
     Shader::Shader(const std::string& vs, const std::string& fs) 
     {
         // Create the vertex shader
@@ -64,13 +58,31 @@ namespace GL
         glUseProgram(0);
     }
 
-    Shader* Shader::FromFiles(const std::string& vertexPath, const std::string& fragmentPath)
+    Shader* Shader::FromFile(const std::string& shader)
     {
-        std::string vertexSource = ReadFileString(vertexPath);
-        std::string fragmentSource = ReadFileString(fragmentPath);
+        enum class ShaderType
+        {
+            Vertex = 0,
+            Fragment = 1,
+            None = -1
+        } currentShaderType;
 
-        std::cout << vertexSource << std::endl;
-        std::cout << fragmentSource << std::endl;
+        std::ifstream shaderFile(shader);
+        std::stringstream ss[2];
+
+        std::string temp;
+        while(std::getline(shaderFile, temp))
+        {
+            if(temp.find("#shader frag") != std::string::npos)
+                currentShaderType = ShaderType::Fragment;
+            else if(temp.find("#shader vert") != std::string::npos)
+                currentShaderType = ShaderType::Vertex;
+            else 
+                ss[(size_t)currentShaderType] << temp << "\n";
+        }
+
+        std::string vertexSource = ss[(size_t)ShaderType::Vertex].str().append("\0");
+        std::string fragmentSource = ss[(size_t)ShaderType::Fragment].str().append("\0");
 
         return new Shader(vertexSource, fragmentSource);
     }

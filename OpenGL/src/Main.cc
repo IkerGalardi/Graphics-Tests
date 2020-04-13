@@ -2,6 +2,8 @@
 #include <stdio.h>
 #include <memory>
 
+#include <filesystem>
+
 #include <SDL2/SDL.h>
 #include <GL/glew.h>
 
@@ -53,6 +55,8 @@ void GLAPIENTRY MessageCallback( GLenum source,
 
 int main(int argc, char** argv) 
 {
+    std::filesystem::path p = std::filesystem::current_path();
+    std::cout << p.generic_string() << std::endl;
     try
     {
         if(SDL_Init(SDL_INIT_EVERYTHING))
