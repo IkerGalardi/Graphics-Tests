@@ -60,12 +60,16 @@ PostProcessingTest::PostProcessingTest()
     Shader->Bind();
     Shader->SetUniformMatrix("transformation", ObjectTransform);
     Shader->SetUniformMatrix("projection", ProjectionMatrix);
+
+    glGenFramebuffers(1, &fbo);
+    glBindBuffer(GL_FRAMEBUFFER, fbo);
 }
 PostProcessingTest::~PostProcessingTest()
 {
-
+    
 }
-void PostProcessingTest::Update()
+
+void PostProcessingTest::Render()
 {
     // Create transformation matrix and send to shader
     Shader->Bind();
@@ -76,6 +80,11 @@ void PostProcessingTest::Update()
     VertexArray->Bind();
     Texture->Bind();
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
+}
+
+void PostProcessingTest::Update()
+{
+
 }
 void PostProcessingTest::OnWindowResize(int newX, int newY)
 {

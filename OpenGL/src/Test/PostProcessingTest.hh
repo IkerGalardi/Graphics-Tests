@@ -11,6 +11,8 @@ public:
     PostProcessingTest();
     ~PostProcessingTest();
 
+    void Render();
+
     void Update() override;
     void OnWindowResize(int newX, int newY) override;
     void OnMouseMovement(int mouseX, int mouseY, int deltaX, int deltaY) override;
@@ -23,6 +25,8 @@ private:
     std::unique_ptr<GL::VertexArray> VertexArray;
     std::unique_ptr<GL::Buffer> VertexBuffer;
     std::unique_ptr<GL::Buffer> IndexBuffer;
+
+    unsigned int fbo;
 
     glm::mat4 ProjectionMatrix;
     glm::mat4 TransformationMatrix;
