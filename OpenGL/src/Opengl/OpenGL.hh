@@ -4,3 +4,4 @@
 #include "Shader.hh"
 #include "Texture.hh"
 #include "VertexArray.hh"
+#include "Framebuffer.hh"

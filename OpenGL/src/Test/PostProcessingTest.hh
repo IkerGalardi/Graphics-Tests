@@ -11,7 +11,6 @@ public:
     PostProcessingTest();
     ~PostProcessingTest();
 
-    void Render();
 
     void Update() override;
     void OnWindowResize(int newX, int newY) override;
@@ -20,13 +19,27 @@ public:
     void OnMouseButtonDown() override;
     void OnMouseButtonUp() override;
 private:
-    std::unique_ptr<GL::Shader> Shader;
-    std::unique_ptr<GL::Texture> Texture;
+    void SetupObjects();
+    void SetupPostProcessing();
+
+    void RenderObjects();
+
+    //Rendering objects
+    std::unique_ptr<GL::Shader> ObjectShader;
+    std::unique_ptr<GL::Texture> ObjectTexture;
     std::unique_ptr<GL::VertexArray> VertexArray;
     std::unique_ptr<GL::Buffer> VertexBuffer;
     std::unique_ptr<GL::Buffer> IndexBuffer;
 
-    unsigned int fbo;
+    // For postprocessing
+    std::unique_ptr<GL::Framebuffer> Framebuffer;
+    std::shared_ptr<GL::Texture> RenderTexture;
+    std::shared_ptr<GL::Texture> DepthTexture;
+    std::unique_ptr<GL::VertexArray> PPVertexArray;
+    std::unique_ptr<GL::Buffer> PPVertexBuffer;
+    std::unique_ptr<GL::Buffer> PPIndexBuffer;
+    std::unique_ptr<GL::Shader> PPShader;
+    std::unique_ptr<GL::Shader> PlainShader;
 
     glm::mat4 ProjectionMatrix;
     glm::mat4 TransformationMatrix;

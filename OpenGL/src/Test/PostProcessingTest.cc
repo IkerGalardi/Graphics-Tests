@@ -27,6 +27,54 @@ PostProcessingTest::PostProcessingTest()
     // Set clear color
     glClearColor(0.0f, 1.0f, 0.0f, 1.0f);
 
+    SetupObjects();
+    SetupPostProcessing();
+}
+PostProcessingTest::~PostProcessingTest()
+{
+}
+
+void PostProcessingTest::SetupObjects()
+{
+    float vertices[] = 
+    {
+        -1.0f, -1.0f, 0.0f, 0.0f, 0.0f,
+         1.0f, -1.0f, 0.0f, 1.0f, 0.0f,
+         1.0f,  1.0f, 0.0f, 1.0f, 1.0f,
+        -1.0f,  1.0f, 0.0f, 0.0f, 1.0f,
+    };
+
+    unsigned int elements[] =
+    {
+        0, 1, 2,
+        2, 3, 0
+    };
+    
+    ObjectShader.reset(GL::Shader::FromFile("assets/shaders/textured.glsl"));
+
+    VertexArray = std::make_unique<GL::VertexArray>();
+    VertexArray->Bind();
+
+    VertexBuffer = std::make_unique<GL::Buffer>(GL_ARRAY_BUFFER, GL_STATIC_DRAW);
+    VertexBuffer->SetData(vertices, sizeof(vertices));
+
+    IndexBuffer = std::make_unique<GL::Buffer>(GL_ELEMENT_ARRAY_BUFFER, GL_STATIC_DRAW);
+    IndexBuffer->SetData(elements, sizeof(elements));
+
+    VertexArray->SetAttributes({{3, GL_FLOAT}, {2, GL_FLOAT}});
+
+    ObjectTexture = std::make_unique<GL::Texture>("test.jpg");
+
+    ObjectTransform = glm::translate(glm::mat4(1.0f), TexturePosition);
+    ObjectShader->Bind();
+    ObjectShader->SetUniformMatrix("transformation", ObjectTransform);
+    ObjectShader->SetUniformMatrix("projection", ProjectionMatrix);
+
+    VertexArray->Unbind();
+}
+
+void PostProcessingTest::SetupPostProcessing()
+{
     float vertices[] = 
     {
         -1.0f, -1.0f, 0.0f, 0.0f, 0.0f,
@@ -41,10 +89,18 @@ PostProcessingTest::PostProcessingTest()
         2, 3, 0
     };
 
-    Shader.reset(GL::Shader::FromFile("assets/shaders/textured.glsl"));
+    Framebuffer = std::make_unique<GL::Framebuffer>();
 
-    VertexArray = std::make_unique<GL::VertexArray>();
-    VertexArray->Bind();
+    RenderTexture = std::make_shared<GL::Texture>(600, 600);
+    RenderTexture = std::make_shared<GL::Texture>(600, 600);
+    Framebuffer->AttatchToColor(RenderTexture);
+    Framebuffer->AttatchToDepth(DepthTexture);
+    
+
+
+    // Setup the vertex/index buffers and vertexarray to the final screen render
+    PPVertexArray = std::make_unique<GL::VertexArray>();
+    PPVertexArray->Bind();
 
     VertexBuffer = std::make_unique<GL::Buffer>(GL_ARRAY_BUFFER, GL_STATIC_DRAW);
     VertexBuffer->SetData(vertices, sizeof(vertices));
@@ -52,39 +108,27 @@ PostProcessingTest::PostProcessingTest()
     IndexBuffer = std::make_unique<GL::Buffer>(GL_ELEMENT_ARRAY_BUFFER, GL_STATIC_DRAW);
     IndexBuffer->SetData(elements, sizeof(elements));
 
-    VertexArray->SetAttributes({{3, GL_FLOAT}, {2, GL_FLOAT}});
-
-    Texture = std::make_unique<GL::Texture>("test.jpg");
-
-    ObjectTransform = glm::translate(glm::mat4(1.0f), TexturePosition);
-    Shader->Bind();
-    Shader->SetUniformMatrix("transformation", ObjectTransform);
-    Shader->SetUniformMatrix("projection", ProjectionMatrix);
-
-    glGenFramebuffers(1, &fbo);
-    glBindBuffer(GL_FRAMEBUFFER, fbo);
-}
-PostProcessingTest::~PostProcessingTest()
-{
-    
+    PPVertexArray->Unbind();
 }
 
-void PostProcessingTest::Render()
+void PostProcessingTest::RenderObjects()
 {
-    // Create transformation matrix and send to shader
-    Shader->Bind();
-    Shader->SetUniformMatrix("transformation", ObjectTransform);
+    // Create transformation matrix and send to ObjectShader
+    ObjectShader->Bind();
+    ObjectShader->SetUniformMatrix("transformation", ObjectTransform);
     
     // Clear screen and render
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     VertexArray->Bind();
-    Texture->Bind();
+    ObjectTexture->Bind();
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
 }
 
 void PostProcessingTest::Update()
 {
+    std::cout << "PostProcessingTest::Update()\n";
 
+    RenderObjects();
 }
 void PostProcessingTest::OnWindowResize(int newX, int newY)
 {
@@ -98,7 +142,7 @@ void PostProcessingTest::OnWindowResize(int newX, int newY)
     // Projection matrix update
     AspectRatio = (float)newX / (float)newY;
     ProjectionMatrix = glm::ortho(-AspectRatio, AspectRatio, -1.0f, 1.0f);
-    Shader->SetUniformMatrix("projection", ProjectionMatrix);
+    ObjectShader->SetUniformMatrix("projection", ProjectionMatrix);
 }
 
 void PostProcessingTest::OnKeyPressed(SDL_Scancode keycode) 

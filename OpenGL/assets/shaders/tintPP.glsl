@@ -8,9 +8,8 @@ out vec2 TexCoord;
 
 void main()
 {
-   mat4 t = transformation * projection;
-   gl_Position = aPos;
    TexCoord = aTexCoord;
+   gl_Position = aPos;
 }
 
 #shader frag

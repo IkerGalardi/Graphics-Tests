@@ -2,6 +2,8 @@
 
 #include "Texture.hh"
 
+#include <memory>
+
 namespace GL
 {
     class Framebuffer 
@@ -10,9 +12,10 @@ namespace GL
         Framebuffer();
         ~Framebuffer();
 
-        void AttatchToColor(const Texture& texture);
-        void Bind();
-        void Unbind();
+        void AttatchToColor(std::shared_ptr<Texture> texture);
+        void AttatchToDepth(std::shared_ptr<Texture> texture);
+        void Bind() const;
+        void Unbind() const;
     private:
         unsigned int FramebufferID;
     protected:
