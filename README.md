@@ -25,4 +25,12 @@ This is used to learn the basics of OpenGL and aims to create an API with clases
 * [X] Abstraction for textures
 * [X] Abstraction for shaders
 * [X] Basic camera and transformation
-* [ ] Postprocessing with framebuffers
+
+## Post processing stack (OPENGL)
+This project is used to learn about how to create a little post processing stack for future projects.
+
+### Roadmap
+* [ ] Getting a triangle
+* [ ] Small helper functions for dealing with OpenGL 
+* [ ] Rendering into an offscreen framebuffer
+* [ ] Postprocessing framework
