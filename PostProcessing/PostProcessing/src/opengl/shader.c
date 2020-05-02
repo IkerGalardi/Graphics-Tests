@@ -7,6 +7,8 @@
 
 #include <GL/glew.h>
 
+#define PRINT(x) printf("%s\n", x)
+
 char* read_file(const char* filepath) {
     FILE* file = fopen(filepath, "r");
     if(file == NULL)
@@ -15,11 +17,13 @@ char* read_file(const char* filepath) {
     fseek(file, 0, SEEK_END);
     unsigned int file_size = ftell(file);
 
-    char* file_contents = malloc(sizeof(char) * file_size + 1);
-    fread(file_contents, file_size + 1, 1, file);
-    strcat(file_contents, '\0');
+    char* file_contents = malloc(sizeof(char) * (file_size + 1));
+    int nread = 0;
+    while((nread = fread(file_contents, 1, file_size, file)) > 0) {
 
-    printf("%s\n", file_contents);
+    }
+    
+    printf("--\n%s\n", file_contents);
     return file_contents;
 }
 
@@ -37,6 +41,8 @@ shader_t shader_from_files(const char* vertex_filepath, const char* fragment_fil
 
     unsigned int vertex_shader = create_and_compile_shader(GL_VERTEX_SHADER, vertex_shader_source);
     unsigned int fragment_shader = create_and_compile_shader(GL_FRAGMENT_SHADER, fragment_shader_source);
+    free(vertex_shader_source);
+    free(fragment_shader_source);
 
     shader_t shader_program = glCreateProgram();
     glAttachShader(shader_program, vertex_shader);
@@ -48,9 +54,6 @@ shader_t shader_from_files(const char* vertex_filepath, const char* fragment_fil
     glDetachShader(shader_program, vertex_shader);
     glDeleteShader(vertex_shader);
     glDeleteShader(fragment_shader);
-
-    free(vertex_shader_source);
-    free(fragment_shader_source);
 
     glUseProgram(0);
     

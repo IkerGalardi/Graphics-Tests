@@ -1,5 +1,7 @@
 #include <stdio.h>
 #include <stdbool.h>
+#include <stdlib.h>
+#include <unistd.h>
 
 #include <SDL2/SDL.h>
 #include <GL/glew.h>
@@ -45,6 +47,8 @@ void setup_opengl_attributes() {
 
 int main(int argc, char** argv)
 {
+    printf("%s\n", getcwd(NULL, 0));
+
     if(SDL_Init(SDL_INIT_EVERYTHING)) {
         fprintf(stderr, "ERROR: error while initializing SDL: %s\n", SDL_GetError());
         exit(-1);

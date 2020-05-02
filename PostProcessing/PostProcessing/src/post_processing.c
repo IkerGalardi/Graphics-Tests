@@ -50,13 +50,13 @@ void post_processing_start() {
 
     glBindVertexArray(0);
 
-    //shader = shader_from_files("assets/simple.vglsl", "assets/color.fglsl");
+    shader = shader_from_files("assets/simple.vglsl", "assets/color.fglsl");
 }
 
 void post_processing_update() {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    //glUseProgram(shader);
+    glUseProgram(shader);
     glBindVertexArray(vertex_array);
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, NULL);
 }
