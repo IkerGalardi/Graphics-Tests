@@ -73,6 +73,8 @@ int main(int argc, char** argv)
     glEnable(GL_DEBUG_OUTPUT);
     glDebugMessageCallback(message_callback, NULL);
 
+    post_processing_start();
+
     bool is_running = true;
     SDL_Event event;
     while(is_running) {
@@ -105,7 +107,7 @@ int main(int argc, char** argv)
             }
         }
 
-        // TODO: call update callback 
+        post_processing_update();
         SDL_GL_SwapWindow(window);
     }
 
