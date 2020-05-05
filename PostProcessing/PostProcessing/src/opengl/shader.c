@@ -16,14 +16,12 @@ char* read_file(const char* filepath) {
 
     fseek(file, 0, SEEK_END);
     unsigned int file_size = ftell(file);
+    fseek(file, 0, SEEK_SET);
 
     char* file_contents = malloc(sizeof(char) * (file_size + 1));
     int nread = 0;
-    while((nread = fread(file_contents, 1, file_size, file)) > 0) {
-
-    }
+    while((nread = fread(file_contents, 1, file_size, file)) > 0);
     
-    printf("--\n%s\n", file_contents);
     return file_contents;
 }
 
