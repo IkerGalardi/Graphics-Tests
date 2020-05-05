@@ -22,6 +22,7 @@ char* read_file(const char* filepath) {
     int nread = 0;
     while((nread = fread(file_contents, 1, file_size, file)) > 0);
     
+    fclose(file);
     return file_contents;
 }
 
