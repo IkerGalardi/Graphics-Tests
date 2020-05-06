@@ -10,6 +10,7 @@ vertex_array_t vertex_array;
 buffer_t vertex_buffer;
 buffer_t index_buffer;
 shader_t shader;
+texture_t texture;
 
 void post_processing_start() {
     // Setup the depth test, blend function and clear color
@@ -50,13 +51,20 @@ void post_processing_start() {
 
     glBindVertexArray(0);
 
-    shader = shader_from_files("assets/simple.vglsl", "assets/color.fglsl");
+    shader = shader_from_files("assets/shaders/simple.vglsl", "assets/shaders/color.fglsl");
+    texture = texture_from_file("assets/textures/test.jpg", GL_CLAMP_TO_EDGE, GL_LINEAR);
 }
 
 void post_processing_update() {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     glUseProgram(shader);
+    int loc = glGetUniformLocation(shader, "texture");
+    glUniform1i(loc, 0);
+
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_2D, 0);
+
     glBindVertexArray(vertex_array);
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, NULL);
 }

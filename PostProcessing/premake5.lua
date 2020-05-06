@@ -24,14 +24,16 @@ workspace "PostProcessing"
 
         includedirs
         {
-            "PostProcessing/src"
+            "PostProcessing/src",
+            "PostProcessing/external"
         }
 
         links 
         {
             "SDL2",
             "GLEW",
-            "GL"
+            "GL", 
+            "m"
         }
 
         filter "configurations:Debug"
