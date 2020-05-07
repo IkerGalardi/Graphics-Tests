@@ -17,7 +17,7 @@ void post_processing_start() {
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-    glClearColor(0.0f, 1.0f, 0.0f, 1.0f);
+    glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
 
     // Setup the buffers
     glGenVertexArrays(1, &vertex_array);
@@ -58,14 +58,15 @@ void post_processing_start() {
 void post_processing_update() {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    glUseProgram(shader);
-    int loc = glGetUniformLocation(shader, "texture");
-    glUniform1i(loc, 0);
+    glBindVertexArray(vertex_array);
 
     glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, 0);
+    glBindTexture(GL_TEXTURE_2D, texture);
 
-    glBindVertexArray(vertex_array);
+    glUseProgram(shader);
+    int loc = glGetUniformLocation(shader, "u_texture");
+    glUniform1i(loc, 0);
+
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, NULL);
 }
 

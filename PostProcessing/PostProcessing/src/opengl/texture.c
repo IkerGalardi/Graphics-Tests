@@ -3,6 +3,10 @@
 #include "stb_image.h"
 
 texture_t texture_from_file(const char* path, GLenum wrap_type, GLenum resize_filter) {
+    int width, height, channels;
+    stbi_set_flip_vertically_on_load(1);
+    stbi_uc* img_data = stbi_load(path, &width, &height, &channels, STBI_rgb);
+
     texture_t text;
     glGenTextures(1, &text);
     glBindTexture(GL_TEXTURE_2D, text);
@@ -11,10 +15,7 @@ texture_t texture_from_file(const char* path, GLenum wrap_type, GLenum resize_fi
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, wrap_type);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, wrap_type);
 
-    int width, height, channels;
-    stbi_set_flip_vertically_on_load(1);
-    unsigned char* img_data = stbi_load(path, &width, &height, &channels, STBI_rgb);
-    printf("Loaded texture's size : %i x %i x %i\n", width, height, channels);
+    
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, img_data);
     glGenerateMipmap(GL_TEXTURE_2D);
 

@@ -19,6 +19,7 @@ char* read_file(const char* filepath) {
     fseek(file, 0, SEEK_SET);
 
     char* file_contents = malloc(sizeof(char) * (file_size + 1));
+    memset(file_contents, 0, file_size + 1);
     int nread = 0;
     while((nread = fread(file_contents, 1, file_size, file)) > 0);
     
