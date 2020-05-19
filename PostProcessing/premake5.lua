@@ -25,7 +25,13 @@ workspace "PostProcessing"
         includedirs
         {
             "PostProcessing/src",
-            "PostProcessing/external"
+            "PostProcessing/external",
+            "libs/cglm/include"
+        }
+
+        libdirs
+        {
+            "libs/cglm"
         }
 
         links 
@@ -33,7 +39,8 @@ workspace "PostProcessing"
             "SDL2",
             "GLEW",
             "GL", 
-            "m"
+            "m",
+            "cglm"
         }
 
         filter "configurations:Debug"

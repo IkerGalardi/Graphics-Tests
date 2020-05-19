@@ -6,5 +6,6 @@
 
 typedef unsigned int buffer_t;
 typedef unsigned int vertex_array_t;
+typedef unsigned int framebuffer_t;
 
 #endif // OPENGL_H 

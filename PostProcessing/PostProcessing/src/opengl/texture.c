@@ -1,6 +1,6 @@
 #include "texture.h"
 
-#include "stb_image.h"
+#include "stbi/stb_image.h"
 
 texture_t texture_from_file(const char* path, GLenum wrap_type, GLenum resize_filter) {
     int width, height, channels;
