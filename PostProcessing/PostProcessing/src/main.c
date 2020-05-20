@@ -97,7 +97,6 @@ int main(int argc, char** argv)
                 } break;
 
                 case SDL_MOUSEMOTION: {
-                    // TODO: call mousemotion callback
                     post_processing_mousemotion(event.motion.x, event.motion.y, event.motion.xrel, event.motion.yrel);
                 } break;
 
@@ -111,8 +110,9 @@ int main(int argc, char** argv)
             }
         }
 
-        post_processing_update();
-        SDL_GL_SwapWindow(window);
+        bool needs_swap = post_processing_update();
+        if(needs_swap)
+            SDL_GL_SwapWindow(window);
     }
 
     SDL_GL_DeleteContext(gl_context);

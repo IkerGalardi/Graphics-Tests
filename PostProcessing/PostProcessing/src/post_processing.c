@@ -1,7 +1,6 @@
 #include "post_processing.h"
 
 #include <stdio.h>
-#include <stdbool.h>
 
 #include <SDL2/SDL.h>
 #include <GL/glew.h>
@@ -12,7 +11,7 @@
 
 quad_t textured_quad;
 orthographic_camera_t camera;
-bool needs_update = false;
+bool needs_render = false;
 
 void post_processing_start() {
     renderer_settings_t settings = {};
@@ -22,14 +21,20 @@ void post_processing_start() {
 
     textured_quad = create_quad("assets/textures/test.jpg");
     camera = create_orthographic_camera((vec2){600, 600}, 0.1f);
+
+    needs_render = true;
 }
 
-void post_processing_update() {
-    if(needs_update) {
+bool post_processing_update() {
+    if(needs_render) {
         renderer_begin_scene(&camera);
         renderer_render_quad(textured_quad);
         renderer_end_scene();
+
+        needs_render = false;
+        return true;
     }
+    return false;
 }
 
 void post_processing_keyup(int scancode) {
