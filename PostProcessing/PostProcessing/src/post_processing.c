@@ -1,6 +1,7 @@
 #include "post_processing.h"
 
 #include <stdio.h>
+#include <stdbool.h>
 
 #include <SDL2/SDL.h>
 #include <GL/glew.h>
@@ -11,12 +12,11 @@
 
 quad_t textured_quad;
 orthographic_camera_t camera;
+bool needs_update = false;
 
 void post_processing_start() {
     renderer_settings_t settings = {};
-    settings.clear_color[1] =  .1f;
-    settings.clear_color[2] =  .1f;
-    settings.clear_color[3] = 1.0f;
+    glm_vec4((vec3){0.1f,0.1f,0.1f}, 1.0, settings.clear_color);
     
     renderer_initialize(settings);
 
@@ -25,9 +25,11 @@ void post_processing_start() {
 }
 
 void post_processing_update() {
-    renderer_begin_scene(&camera);
-    renderer_render_quad(textured_quad);
-    rederer_end_scene();
+    if(needs_update) {
+        renderer_begin_scene(&camera);
+        renderer_render_quad(textured_quad);
+        renderer_end_scene();
+    }
 }
 
 void post_processing_keyup(int scancode) {
