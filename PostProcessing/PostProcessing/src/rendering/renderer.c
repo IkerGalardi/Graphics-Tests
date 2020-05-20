@@ -18,7 +18,7 @@ void renderer_begin_scene(orthographic_camera_t* ortho_cam) {
     // Setup camera
     glUseProgram(texture_shader);
     int location = glGetUniformLocation(texture_shader, "u_view");
-    glUniformMatrix4fv(location, 1, GL_FALSE, ortho_cam->view);
+    glUniformMatrix4fv(location, 1, GL_FALSE, (float*)ortho_cam->view);
 }
 
 
@@ -37,6 +37,6 @@ void renderer_render_quad(quad_t quad) {
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, NULL);
 }
 
-void rederer_end_scene() {
+void renderer_end_scene() {
 
 }
