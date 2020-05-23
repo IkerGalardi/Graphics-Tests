@@ -38,22 +38,22 @@ bool post_processing_update() {
 }
 
 void post_processing_keyup(int scancode) {
-
+    printf("%i key was released", scancode);
 }
 
 void post_processing_keydown(int scancode) {
-
+    printf("%i key was pressed", scancode);
 }
 
 void post_processing_mousemotion(int new_x, int new_y, int x_rel, int y_rel) {
 
 }
 
-void post_processing_mousebuttondown() {
+void post_processing_mousebuttondown(int button) {
 
 }
 
-void post_processing_mousebuttonup() {
+void post_processing_mousebuttonup(int button) {
 
 }
 
