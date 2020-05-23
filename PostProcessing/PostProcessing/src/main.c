@@ -89,12 +89,12 @@ int main(int argc, char** argv)
                 } break;
 
                 case SDL_KEYDOWN: {
-                    // TODO: call the key down callback
+                    printf("keydon");
                     post_processing_keydown(event.key.keysym.scancode);
                 } break;
 
                 case SDL_KEYUP: {
-                    // TODO: call the key up callback
+                    printf("keydus");
                     post_processing_keyup(event.key.keysym.scancode);
                 } break;
 
@@ -103,12 +103,10 @@ int main(int argc, char** argv)
                 } break;
 
                 case SDL_MOUSEBUTTONDOWN: {
-                    // TODO: call mouse button down callback
                     post_processing_mousebuttondown(event.button.button);
                 } break;
 
                 case SDL_MOUSEBUTTONUP: {
-                    // TODO: call mouse button up callback
                     post_processing_mousebuttonup(event.button.button);
                 } break;
             }

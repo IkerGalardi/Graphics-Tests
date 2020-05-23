@@ -34,15 +34,16 @@ bool post_processing_update() {
         needs_render = false;
         return true;
     }
+
     return false;
 }
 
 void post_processing_keyup(int scancode) {
-    printf("%i key was released", scancode);
+    printf("%i key was released\n", scancode);
 }
 
 void post_processing_keydown(int scancode) {
-    printf("%i key was pressed", scancode);
+    printf("%i key was pressed\n", scancode);
 }
 
 void post_processing_mousemotion(int new_x, int new_y, int x_rel, int y_rel) {
