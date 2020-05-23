@@ -12,10 +12,20 @@ typedef struct quad {
     vertex_array_t vertex_array;
     buffer_t vertex_buffer;
     buffer_t index_buffer;
-    texture_t texture;
 } quad_t;
 
-quad_t create_quad(const char* textpath);
+typedef struct textured_quad {
+    quad_t quad;
+    texture_t texture;
+} textured_quad_t;
+
+
+// QUAD FUNCTIONS
+quad_t create_quad();
 void delete_quad(quad_t quad);
+
+// TEXTURED QUAD FUNCTIONS
+textured_quad_t create_textured_quad(const char* textpath);
+void delete_textured_quad(textured_quad_t quad);
 
 #endif // TEXTURED_QUAD_H

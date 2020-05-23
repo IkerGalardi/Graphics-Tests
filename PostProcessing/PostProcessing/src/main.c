@@ -89,12 +89,10 @@ int main(int argc, char** argv)
                 } break;
 
                 case SDL_KEYDOWN: {
-                    printf("keydon");
                     post_processing_keydown(event.key.keysym.scancode);
                 } break;
 
                 case SDL_KEYUP: {
-                    printf("keydus");
                     post_processing_keyup(event.key.keysym.scancode);
                 } break;
 

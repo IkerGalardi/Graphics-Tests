@@ -9,8 +9,9 @@ typedef struct renderer_settings {
 } renderer_settings_t;
 
 void renderer_initialize(renderer_settings_t settings);
-void renderer_begin_scene(orthographic_camera_t* cam);
-void renderer_render_quad(quad_t quad);
+void renderer_begin_scene(orthographic_camera_t* cam, framebuffer_t framebuffer);
+void renderer_draw_textured_quad(textured_quad_t quad);
+void renderer_draw_quad(quad_t quad, texture_t texture);
 void renderer_end_scene();
 
 #endif // RENDERER_H

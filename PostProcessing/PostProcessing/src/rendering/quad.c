@@ -1,24 +1,22 @@
 #include "quad.h"
 
-struct quad create_quad(const char* textpath) {
+quad_t create_quad() {
     quad_t result;
 
     glGenVertexArrays(1, &result.vertex_array);
     glBindVertexArray(result.vertex_array);
 
-    float vertices[] = 
-    {
-        -0.5f, -0.5f, 0.0f, 0.0f, 0.0f,
-         0.5f, -0.5f, 0.0f, 1.0f, 0.0f,
-         0.5f,  0.5f, 0.0f, 1.0f, 1.0f,
-        -0.5f,  0.5f, 0.0f, 0.0f, 1.0f,
+    float vertices[] = {
+        -1.0f, -1.0f, 0.0f, 0.0f, 0.0f,
+         1.0f, -1.0f, 0.0f, 1.0f, 0.0f,
+         1.0f,  1.0f, 0.0f, 1.0f, 1.0f,
+        -1.0f,  1.0f, 0.0f, 0.0f, 1.0f,
     };
     glGenBuffers(1, &result.vertex_buffer);
     glBindBuffer(GL_ARRAY_BUFFER, result.vertex_buffer);
     glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
-    unsigned int indices[] =
-    {
+    unsigned int indices[] = {
         0, 1, 2,
         2, 3, 0
     };
@@ -34,8 +32,6 @@ struct quad create_quad(const char* textpath) {
 
     glBindVertexArray(0);
 
-    result.texture = texture_from_file(textpath, GL_CLAMP_TO_EDGE, GL_LINEAR);
-
     return result;
 }
 
@@ -43,5 +39,18 @@ void delete_quad(quad_t quad) {
     glDeleteVertexArrays(1, &quad.vertex_array);
     glDeleteBuffers(1, &quad.vertex_buffer);
     glDeleteBuffers(1, &quad.index_buffer);
+}
+
+textured_quad_t create_textured_quad(const char* textpath) {
+    textured_quad_t result = { 
+        .quad = create_quad(), 
+        .texture = texture_from_file(textpath, GL_CLAMP_TO_EDGE, GL_LINEAR) 
+    };
+
+    return result;
+}
+
+void delete_textured_quad(textured_quad_t quad) {
+    delete_quad(quad.quad);
     glDeleteTextures(1, &quad.texture);
 }

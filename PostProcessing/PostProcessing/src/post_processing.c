@@ -9,7 +9,7 @@
 #include "rendering/renderer.h"
 #include "rendering/camera.h"
 
-quad_t textured_quad;
+textured_quad_t textured_quad;
 orthographic_camera_t camera;
 bool needs_render = false;
 
@@ -19,16 +19,16 @@ void post_processing_start() {
     
     renderer_initialize(settings);
 
-    textured_quad = create_quad("assets/textures/test.jpg");
-    camera = create_orthographic_camera((vec2){600, 600}, 0.1f);
+    textured_quad = create_textured_quad("assets/textures/test.jpg");
+    camera = create_orthographic_camera((vec2){600, 600}, 1.0f);
 
     needs_render = true;
 }
 
 bool post_processing_update() {
     if(needs_render) {
-        renderer_begin_scene(&camera);
-        renderer_render_quad(textured_quad);
+        renderer_begin_scene(&camera, screen_framebuffer);
+        renderer_draw_textured_quad(textured_quad);
         renderer_end_scene();
 
         needs_render = false;
@@ -59,5 +59,5 @@ void post_processing_mousebuttonup(int button) {
 }
 
 void post_processing_end() {
-    delete_quad(textured_quad);
+    delete_textured_quad(textured_quad);
 }

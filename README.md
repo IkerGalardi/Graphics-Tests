@@ -30,7 +30,7 @@ This is used to learn the basics of OpenGL and aims to create an API with clases
 This project is used to learn about how to create a little post processing stack for future projects.
 
 ### Roadmap
-* [ ] Getting a triangle
-* [ ] Small helper functions for dealing with OpenGL 
+* [X] Getting a triangle
+* [X] Small helper functions for dealing with OpenGL 
 * [ ] Rendering into an offscreen framebuffer
 * [ ] Postprocessing framework
