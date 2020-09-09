@@ -26,4 +26,5 @@ texture_t texture_from_file(const char* path, GLenum wrap_type, GLenum resize_fi
 
 texture_t texture_empty(size_t width, size_t height, GLenum format, GLenum wrap_type, GLenum resize_filter) {
     /// TODO: implement it
+    return 0;
 }
