@@ -1,5 +1,7 @@
 #include "framebuffer.h"
 
+#include <stdio.h>
+
 framebuffer_t create_framebuffer(framebuffer_settings_t settings) {
     framebuffer_t result;
     result.settings = settings;
@@ -32,4 +34,13 @@ framebuffer_t create_framebuffer(framebuffer_settings_t settings) {
     }
 
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
+}
+
+void framebuffer_bind(framebuffer_t* fb) {
+    if(fb == NULL) {
+        glBindFramebuffer(GL_FRAMEBUFFER, 0);
+    } else {
+        glBindFramebuffer(GL_FRAMEBUFFER, fb->id);
+        glViewport(0, 0, fb->settings.width, fb->settings.height);
+    }
 }

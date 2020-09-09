@@ -3,7 +3,9 @@
 
 #include "texture.h"
 
-#define screen_framebuffer  0
+typedef struct framebuffer_settings {
+    int width, height;
+} framebuffer_settings_t;
 
 typedef struct framebuffer {
     framebuffer_settings_t settings;
@@ -12,10 +14,7 @@ typedef struct framebuffer {
     texture_t depth_texture;
 } framebuffer_t;
 
-typedef struct framebuffer_settings {
-    int width, height;
-} framebuffer_settings_t;
-
 framebuffer_t create_framebuffer(framebuffer_settings_t settings);
+void framebuffer_bind(framebuffer_t* fb);
 
 #endif // FRAMEBUFFER_H

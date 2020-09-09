@@ -27,7 +27,7 @@ void post_processing_start() {
 
 bool post_processing_update() {
     if(needs_render) {
-        renderer_begin_scene(&camera, screen_framebuffer);
+        renderer_begin_scene(&camera, NULL);
         renderer_draw_textured_quad(textured_quad);
         renderer_end_scene();
 
